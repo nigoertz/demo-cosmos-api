@@ -9,19 +9,20 @@ from typing import Any, List, Optional
 
 app = FastAPI()
 
-# Enable CORS for localhost:8080
+# Enable CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8080"],
+    allow_origins=[os.getenv('MONITORING_URL')],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 # MongoDB connection
-cosmosdb_uri = "mongodb+srv://{user}:{password}@erp-connector-monitoring-db.mongocluster.cosmos.azure.com/?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false&maxIdleTimeMS=120000".format(
-    user = os.getenv('COSMOSDB_USER'),
-    password = os.getenv('COSMOSDB_PASSWORD')
+cosmosdb_uri = "mongodb+srv://{user}:{password}@{url}/?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false&maxIdleTimeMS=120000".format(
+    user=os.getenv('COSMOSDB_USER'),
+    password=os.getenv('COSMOSDB_PASSWORD'),
+    url=os.getenv('COSMOSDB_URL')
 )
 
 try:

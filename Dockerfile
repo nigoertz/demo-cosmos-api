@@ -1,4 +1,5 @@
 FROM python:3.12.0
+ENV PYTHONUNBUFFERED=1
 WORKDIR /src
 COPY /src/main.py main.py
 RUN pip3 install fastapi pymongo pydantic
