@@ -137,6 +137,10 @@ async def create_log(log: Log):
     log_collection.insert_one(log_dict)
     return {"message": "Log saved", "log": log}
 
+@app.get("/status")
+async def get_status():
+    return "Connected to API"
+
 @app.get("/snapshots")
 async def get_all_snapshots():
     snapshots = list(snapshot_collection.find())
